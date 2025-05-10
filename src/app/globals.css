@@ -1,0 +1,7 @@
+@import "tailwindcss";
+
+/* 移除 :root 变量定义，因为我们使用 Material-UI 的主题系统 */
+
+body {
+  font-family: Arial, Helvetica, sans-serif;
+}
