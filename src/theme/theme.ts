@@ -6,16 +6,16 @@ const getDesignTokens = (mode: PaletteMode): ThemeOptions => ({
     ...(mode === 'light'
       ? {
           // Light mode palette
-          primary: {
-            main: '#1976d2',
-          },
-          secondary: {
-            main: '#9c27b0',
-          },
-          background: {
-            default: '#fff',
-            paper: '#f5f5f5',
-          },
+          // primary: {
+          // main: '#1976d2',
+          // },
+          // secondary: {
+          //   main: '#9c27b0',
+          // },
+          // background: {
+          //   default: '#fff',
+          //   paper: '#f5f5f5',
+          // },
         }
       : {
           // Dark mode palette
@@ -31,15 +31,11 @@ const getDesignTokens = (mode: PaletteMode): ThemeOptions => ({
           },
         }),
   },
-  components: {
-    MuiButton: {
-      styleOverrides: {
-        root: ({ theme }) => ({
-          textTransform: 'none',
-        }),
-      },
-    },
+  shape: {
+    borderRadius: 6,
   },
+  spacing: 4,
+  components: {},
 })
 
 export const createAppTheme = (mode: PaletteMode) => {

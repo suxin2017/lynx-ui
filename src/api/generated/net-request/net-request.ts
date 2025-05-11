@@ -27,7 +27,9 @@ import type {
 
 import { customInstance } from '../../mutator/custom-instance'
 import type {
+  GetRequestsData,
   ResponseDataWrapperCaptureSwitch,
+  ResponseDataWrapperRecordRequests,
   ResponseDataWrapperTupleUnit,
 } from '../utoipaAxum.schemas'
 
@@ -266,6 +268,74 @@ export const useToggleCapture = <TError = void, TContext = unknown>(
   queryClient?: QueryClient
 ): UseMutationResult<Awaited<ReturnType<typeof toggleCapture>>, TError, void, TContext> => {
   const mutationOptions = getToggleCaptureMutationOptions(options)
+
+  return useMutation(mutationOptions, queryClient)
+}
+export const getCachedRequests = (getRequestsData: GetRequestsData, signal?: AbortSignal) => {
+  return customInstance<ResponseDataWrapperRecordRequests>({
+    url: `/net_request/requests`,
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    data: getRequestsData,
+    signal,
+  })
+}
+
+export const getGetCachedRequestsMutationOptions = <TError = void, TContext = unknown>(options?: {
+  mutation?: UseMutationOptions<
+    Awaited<ReturnType<typeof getCachedRequests>>,
+    TError,
+    { data: GetRequestsData },
+    TContext
+  >
+}): UseMutationOptions<
+  Awaited<ReturnType<typeof getCachedRequests>>,
+  TError,
+  { data: GetRequestsData },
+  TContext
+> => {
+  const mutationKey = ['getCachedRequests']
+  const { mutation: mutationOptions } = options
+    ? options.mutation && 'mutationKey' in options.mutation && options.mutation.mutationKey
+      ? options
+      : { ...options, mutation: { ...options.mutation, mutationKey } }
+    : { mutation: { mutationKey } }
+
+  const mutationFn: MutationFunction<
+    Awaited<ReturnType<typeof getCachedRequests>>,
+    { data: GetRequestsData }
+  > = (props) => {
+    const { data } = props ?? {}
+
+    return getCachedRequests(data)
+  }
+
+  return { mutationFn, ...mutationOptions }
+}
+
+export type GetCachedRequestsMutationResult = NonNullable<
+  Awaited<ReturnType<typeof getCachedRequests>>
+>
+export type GetCachedRequestsMutationBody = GetRequestsData
+export type GetCachedRequestsMutationError = void
+
+export const useGetCachedRequests = <TError = void, TContext = unknown>(
+  options?: {
+    mutation?: UseMutationOptions<
+      Awaited<ReturnType<typeof getCachedRequests>>,
+      TError,
+      { data: GetRequestsData },
+      TContext
+    >
+  },
+  queryClient?: QueryClient
+): UseMutationResult<
+  Awaited<ReturnType<typeof getCachedRequests>>,
+  TError,
+  { data: GetRequestsData },
+  TContext
+> => {
+  const mutationOptions = getGetCachedRequestsMutationOptions(options)
 
   return useMutation(mutationOptions, queryClient)
 }

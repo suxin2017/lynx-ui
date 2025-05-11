@@ -10,6 +10,7 @@ export default defineConfig({
       target: './src/api/generated',
       client: 'react-query',
       prettier: true,
+      mock: true,
       override: {
         mutator: {
           path: './src/api/mutator/custom-instance.ts',

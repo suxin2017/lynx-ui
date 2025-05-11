@@ -1,8 +1,9 @@
 'use client'
 
-import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
 import { PropsWithChildren, useEffect, useState } from 'react'
 import CssBaseline from '@mui/material/CssBaseline'
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
+
 import { ThemeProvider } from '../theme/ThemeContext'
 
 export function MSWProvider({ children }: PropsWithChildren) {
@@ -34,7 +35,7 @@ export function MSWProvider({ children }: PropsWithChildren) {
   return <>{children}</>
 }
 
-export function Providers({ children }: { children: React.ReactNode }) {
+export function ReactQueryProvider({ children }: { children: React.ReactNode }) {
   const [queryClient] = useState(
     () =>
       new QueryClient({
@@ -46,12 +47,5 @@ export function Providers({ children }: { children: React.ReactNode }) {
       })
   )
 
-  return (
-    <ThemeProvider>
-      <CssBaseline />
-      <QueryClientProvider client={queryClient}>
-        <MSWProvider>{children}</MSWProvider>
-      </QueryClientProvider>
-    </ThemeProvider>
-  )
+  return <QueryClientProvider client={queryClient}>{children}</QueryClientProvider>
 }
